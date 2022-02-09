@@ -40,7 +40,6 @@ def main(ctx, list_modes):
               help='Sets break time label', show_default=True)
 def start(mode, session_size, work_label, break_label):
     '''Starts a pomodoro timer with choosed mode and size'''
-    # TODO: Support long breaks
     with open('modes.json', 'r') as f:
         json_inner = f.read()
         if mode not in json.loads(json_inner).keys():
@@ -53,7 +52,7 @@ def start(mode, session_size, work_label, break_label):
         fg='green')
     for i in range(1, session_size+1):
         click.echo('\n' + '#' * 30)
-        click.secho(f'Pomodoro {i}/5 started!', fg='green')
+        click.secho(f'Pomodoro {i}/{session_size} started!', fg='green')
         click.secho(work_label, fg='green')
         # For testing i use seconds instead of minutes
         for tick in range(1, mode_data['work_time']+1):
@@ -64,7 +63,9 @@ def start(mode, session_size, work_label, break_label):
         # For last pomodoro
         if i < session_size:
             click.secho('\n' + break_label, fg='red')
-            for tick in range(1, mode_data['break_time']+1):
+            for tick in range(1, mode_data['break_time']+1
+                              if i % mode_data['long_break_freq']
+                              else mode_data['long_break_time']+1):
                 sys.stdout.write("\r")
                 sys.stdout.write(ftime(seconds=tick))
                 sys.stdout.flush()

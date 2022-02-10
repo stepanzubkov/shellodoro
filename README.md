@@ -6,7 +6,7 @@ Shellodoro - the console pomodoro app on python. In Shellodoro you can choose so
 What shellodoro can now:
 - Start timer - yes
 - Choose timer mode - yes
-- Create timer mode - no
+- Create timer mode - yes
 - Save stats - no
 - Music signal - no
 

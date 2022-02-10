@@ -16,5 +16,17 @@
         "break_time": 30,
         "long_break_time": 45,
         "long_break_freq": 4
+    },
+    "my mode": {
+        "work_time": 123,
+        "break_time": 32,
+        "long_break_time": 65,
+        "long_break_freq": 4
+    },
+    "my mode2": {
+        "work_time": 1,
+        "break_time": 1,
+        "long_break_time": 1,
+        "long_break_freq": 4
     }
 }

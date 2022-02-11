@@ -45,7 +45,7 @@ def start(mode, session_size, work_label, break_label):
         json_inner = f.read()
         # Check existing mode
         if mode not in json.loads(json_inner).keys():
-            raise NameError(f'Mode "{mode}" does not exists')
+            raise NameError(f'Mode "{mode}" does not exist')
         else:
             mode_data = json.loads(json_inner)[mode]
 
@@ -78,8 +78,7 @@ def start(mode, session_size, work_label, break_label):
 
 
 @main.command()
-@click.option('--name', '-n', prompt=True,
-              help='Sets a name for pomodoro mode')
+@click.argument('name')
 @click.option('--work-time', '-w', default=20, show_default=True,
               help='Sets a work time')
 @click.option('--break-time', '-b', default=5, show_default=True,
@@ -101,7 +100,24 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
             'long_break_freq': long_break_freq
         }
         json.dump(modes, f, indent=4)
-    click.echo('The mode was created successfully!')
+    click.secho('The mode was created successfully!', fg='green')
+
+
+@main.command()
+@click.argument('name')
+def delete(name):
+    '''Delete pomodoro mode'''
+
+    with open('modes.json', 'r') as f:
+        json_inner = f.read()
+        modes = json.loads(json_inner)
+    if name not in modes.keys():
+        click.secho('Error: This mode does not exist', fg='red')
+        return
+    with open('modes.json', 'w') as f:
+        del modes[name]
+        json.dump(modes, f, indent=4)
+    click.secho('The mode was deleted successfully!', fg='green')
 
 
 if __name__ == '__main__':

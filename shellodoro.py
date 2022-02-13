@@ -92,6 +92,9 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
     with open('modes.json', 'r') as f:
         json_inner = f.read()
         modes = json.loads(json_inner)
+    if name in modes.keys():
+        click.secho('Error: This mode already exists', fg='red')
+        return
     with open('modes.json', 'w') as f:
         modes[name] = {
             'work_time': work_time,
@@ -118,6 +121,44 @@ def delete(name):
         del modes[name]
         json.dump(modes, f, indent=4)
     click.secho('The mode was deleted successfully!', fg='green')
+
+
+@main.command()
+@click.argument('name')
+@click.option('--work-time', '-w', type=int, show_default=True,
+              help='Sets a work time')
+@click.option('--break-time', '-b', type=int, show_default=True,
+              help='Sets a break time')
+@click.option('--long-break-time', '-l', type=int, show_default=True,
+              help='Sets a long break time')
+@click.option('--long-break-freq', '-f', type=int, show_default=True,
+              help='Sets a long break frequency')
+def edit(name, work_time, break_time, long_break_time, long_break_freq):
+    '''Edit pomodoro mode'''
+    with open('modes.json', 'r') as f:
+        json_inner = f.read()
+        modes = json.loads(json_inner)
+    if name not in modes.keys():
+        click.secho('Error: This mode does not exist', fg='red')
+        return
+    with open('modes.json', 'w') as f:
+        current_mode = modes[name]
+        modes[name] = {
+            'work_time':
+                work_time if work_time
+                else current_mode['work_time'],
+            'break_time':
+                break_time if break_time
+                else current_mode['break_time'],
+            'long_break_time':
+                long_break_time if long_break_time
+                else current_mode['long_break_time'],
+            'long_break_freq':
+                long_break_freq if long_break_freq
+                else current_mode['long_break_freq']
+        }
+        json.dump(modes, f, indent=4)
+    click.secho('The mode was edited successfully!', fg='green')
 
 
 if __name__ == '__main__':

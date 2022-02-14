@@ -2,6 +2,20 @@ import click
 import sys
 import time
 import json
+import subprocess
+import plyer
+
+
+def send_notify(text):
+    if sys.platform == 'win32':
+        plyer.notification.notify(
+            message=text,
+            app_name='Shellodoro',
+            title='Shellodoro')
+    else:
+        subprocess.Popen(['notify-send', "Shellodoro", text,
+                          '-a', 'Shellodoro',
+                          '-i', 'terminal'])
 
 
 def ftime(seconds):
@@ -56,6 +70,7 @@ def start(mode, session_size, work_label, break_label):
         click.echo('\n' + '#' * 30)
         click.secho(f'Pomodoro {i}/{session_size} started!', fg='green')
         click.secho(work_label, fg='green')
+        send_notify(text=work_label)
         # Work timer
         # For testing i use seconds instead of minutes
         for tick in range(1, mode_data['work_time']+1):
@@ -66,6 +81,7 @@ def start(mode, session_size, work_label, break_label):
         # For last pomodoro
         if i < session_size:
             # Break timer
+            send_notify(text=break_label)
             click.secho('\n' + break_label, fg='red')
             for tick in range(1, mode_data['break_time']+1
                               if i % mode_data['long_break_freq']
@@ -74,6 +90,8 @@ def start(mode, session_size, work_label, break_label):
                 sys.stdout.write(ftime(seconds=tick))
                 sys.stdout.flush()
                 time.sleep(1)
+
+    send_notify(text='Thank you for using shellodoro! :)')
     click.echo('\nThank you for using shellodoro! :)')
 
 

@@ -1,0 +1,39 @@
+{
+    "days": [
+        {
+            "name": "Monday",
+            "pomodoros": 1,
+            "date": "21.2.2022"
+        },
+        {
+            "name": "Tuesday",
+            "pomodoros": 0,
+            "date": "-"
+        },
+        {
+            "name": "Wednesday",
+            "pomodoros": 0,
+            "date": "-"
+        },
+        {
+            "name": "Thursday",
+            "pomodoros": 0,
+            "date": "-"
+        },
+        {
+            "name": "Friday",
+            "pomodoros": 0,
+            "date": "-"
+        },
+        {
+            "name": "Saturday",
+            "pomodoros": 0,
+            "date": "-"
+        },
+        {
+            "name": "Sunday",
+            "pomodoros": 4,
+            "date": "20.2.2022"
+        }
+    ]
+}

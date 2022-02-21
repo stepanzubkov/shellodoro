@@ -2,35 +2,15 @@ import click
 import sys
 import time
 import json
-import subprocess
-import plyer
 
-
-def send_notify(text):
-    if sys.platform == 'win32':
-        plyer.notification.notify(
-            message=text,
-            app_name='Shellodoro',
-            title='Shellodoro')
-    else:
-        subprocess.Popen(['notify-send', "Shellodoro", text,
-                          '-a', 'Shellodoro',
-                          '-i', 'terminal'])
-
-
-def ftime(seconds):
-    '''Time formatting function for pomodoro timer'''
-    m = seconds//60
-    s = seconds - m*60
-    format_m = str(m) if m >= 10 else f'0{m}'
-    format_s = str(s) if s >= 10 else f'0{s}'
-    return f'{format_m}:{format_s}'
+from tools import ftime, send_notify, add_pomodoro, get_json, to_graph
 
 
 @click.group(invoke_without_command=True)
 @click.pass_context
 @click.option('--list-modes', '-l', is_flag=True, help='List pomodoro modes')
-def main(ctx, list_modes):
+@click.option('--stats', '-s', is_flag=True, help='Show user statistics')
+def main(ctx, list_modes, stats):
     '''Pomodoro timer in terminal'''
     if ctx.invoked_subcommand is None:
         # List all pomodoro modes
@@ -41,6 +21,8 @@ def main(ctx, list_modes):
                     click.secho(f'{i}:', fg='green')
                     for j in modes[i].keys():
                         click.echo(f'\t{j}: {modes[i][j]}')
+        if stats:
+            to_graph(get_json('stats.json'))
 
 
 @main.command()
@@ -78,6 +60,7 @@ def start(mode, session_size, work_label, break_label):
             sys.stdout.write(ftime(seconds=tick))
             sys.stdout.flush()
             time.sleep(1)
+        add_pomodoro()
         # For last pomodoro
         if i < session_size:
             # Break timer
@@ -107,9 +90,7 @@ def start(mode, session_size, work_label, break_label):
               help='Sets a long break frequency')
 def add(name, work_time, break_time, long_break_time, long_break_freq):
     '''Add a pomodoro mode'''
-    with open('modes.json', 'r') as f:
-        json_inner = f.read()
-        modes = json.loads(json_inner)
+    modes = get_json('modes.json')
     if name in modes.keys():
         click.secho('Error: This mode already exists', fg='red')
         return
@@ -129,9 +110,7 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
 def delete(name):
     '''Delete pomodoro mode'''
 
-    with open('modes.json', 'r') as f:
-        json_inner = f.read()
-        modes = json.loads(json_inner)
+    modes = get_json('modes.json')
     if name not in modes.keys():
         click.secho('Error: This mode does not exist', fg='red')
         return
@@ -153,9 +132,7 @@ def delete(name):
               help='Sets a long break frequency')
 def edit(name, work_time, break_time, long_break_time, long_break_freq):
     '''Edit pomodoro mode'''
-    with open('modes.json', 'r') as f:
-        json_inner = f.read()
-        modes = json.loads(json_inner)
+    modes = get_json('modes.json')
     if name not in modes.keys():
         click.secho('Error: This mode does not exist', fg='red')
         return

@@ -7,7 +7,7 @@ What shellodoro can now:
 - Start timer - yes
 - Choose timer mode - yes
 - Create timer mode - yes
-- Save stats - no
+- Save stats - yes
 - Music signal - yes
 
 ## Starting app

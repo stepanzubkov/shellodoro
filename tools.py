@@ -1,6 +1,5 @@
 from operator import itemgetter
-from datetime import datetime
-from click import secho
+from datetime import datetime, timedelta
 import subprocess
 import json
 from plyer import notification
@@ -33,6 +32,8 @@ def ftime(seconds: int):
 def to_graph(data: dict):
     data = data['days']
     cur_day = datetime.today().weekday() + 1
+    now = datetime.now()
+    week_ago = now - timedelta(days=7)
     for i in range(
             sorted(data, key=itemgetter('pomodoros'))[-1]['pomodoros'], 0, -1):
         print(
@@ -42,6 +43,7 @@ def to_graph(data: dict):
         )
     print('  ', *[day['name'][:3]
           for day in data[cur_day:] + data[:cur_day]])
+    print('  ', week_ago.strftime('%d.%m.%Y'), '-', now.strftime('%d.%m.%Y'))
 
 
 def add_pomodoro():
@@ -51,8 +53,6 @@ def add_pomodoro():
         pomodoros = json.loads(json_inner)['days']
         cur_day = datetime.today().weekday()
         pomodoros[cur_day]['pomodoros'] += 1
-        now = datetime.now()
-        pomodoros[cur_day]['date'] = f'{now.day}.{now.month}.{now.year}'
         json.dump({'days': pomodoros}, f, indent=4)
 
 

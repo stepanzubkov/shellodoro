@@ -2,38 +2,31 @@
     "days": [
         {
             "name": "Monday",
-            "pomodoros": 1,
-            "date": "21.2.2022"
+            "pomodoros": 1
         },
         {
             "name": "Tuesday",
-            "pomodoros": 0,
-            "date": "-"
+            "pomodoros": 1
         },
         {
             "name": "Wednesday",
-            "pomodoros": 0,
-            "date": "-"
+            "pomodoros": 0
         },
         {
             "name": "Thursday",
-            "pomodoros": 0,
-            "date": "-"
+            "pomodoros": 0
         },
         {
             "name": "Friday",
-            "pomodoros": 0,
-            "date": "-"
+            "pomodoros": 0
         },
         {
             "name": "Saturday",
-            "pomodoros": 0,
-            "date": "-"
+            "pomodoros": 0
         },
         {
             "name": "Sunday",
-            "pomodoros": 4,
-            "date": "20.2.2022"
+            "pomodoros": 4
         }
     ]
 }

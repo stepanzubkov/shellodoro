@@ -122,8 +122,7 @@ def start(mode, session_size, work_label, break_label):
         click.secho(work_label, fg='green')
         send_notify(text=work_label)
         # Work timer
-        # For testing i use seconds instead of minutes
-        for tick in range(1, mode_data['work_time']+1):
+        for tick in range(1, mode_data['work_time']*60+1):
             sys.stdout.write("\r")
             sys.stdout.write(ftime(seconds=tick))
             sys.stdout.flush()
@@ -134,9 +133,9 @@ def start(mode, session_size, work_label, break_label):
             # Break timer
             send_notify(text=break_label)
             click.secho('\n' + break_label, fg='red')
-            for tick in range(1, mode_data['break_time']+1
+            for tick in range(1, mode_data['break_time']*60+1
                               if i % mode_data['long_break_freq']
-                              else mode_data['long_break_time']+1):
+                              else mode_data['long_break_time']*60+1):
                 sys.stdout.write("\r")
                 sys.stdout.write(ftime(seconds=tick))
                 sys.stdout.flush()

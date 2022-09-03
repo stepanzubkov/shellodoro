@@ -12,7 +12,7 @@ What shellodoro can now:
 
 ## Starting app
 ```
-python3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 and

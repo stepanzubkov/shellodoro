@@ -12,7 +12,7 @@ setuptools.setup(
     description="Pomodoro timer right in your favorite terminal!",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/StepanZubkov/shellodoro",
+    url="https://github.com/Stepan-Zubkov/shellodoro",
     keywords="pomodoro, timer, tool, cli",
     packages=setuptools.find_packages(),
     include_package_data=True,

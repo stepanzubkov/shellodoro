@@ -1,4 +1,5 @@
 # ![Shellodoro](https://user-images.githubusercontent.com/83695097/189335921-4c7514f0-fbfe-4387-9597-fa4a09c03561.jpg)
+
 # Right in your favorite terminal
 
 Now you do not have to be distracted from the ~~neovim~~ terminal. Just work with pomodoro in terminal!
@@ -29,40 +30,19 @@ Also shellodoro sends notifications, when pomodoro ends
 
 ![Screenshot_20220909_152656](https://user-images.githubusercontent.com/83695097/189349675-eb96b31d-4111-470b-bb83-eb305c5eb167.png)
 
-# Installation 
-```
-git clone https://github.com/Stepan-Zubkov/shellodoro.git
-```
-Or by ssh
-```
-git clone git@github.com:Stepan-Zubkov/shellodoro.git
-```
-Or download and unpack zip https://github.com/Stepan-Zubkov/shellodoro/archive/refs/heads/main.zip
-
-
-# Starting...
-```
-cd shellodoro
-```
+# Installation
 
 ```
-pip3 install -r requirements.txt
+pip install shellodoro
 ```
 
-and start it!
+Then, run in terminal
 
 ```
-python3 shellodoro.py start
+shdr --help
 ```
 
-List all CLI commands
-```
-python3 shellodoro.py --help
-```
-Or by specified command
-```
-python3 shellodoro.py <command (ex. start)> --help
-```
+Congratulations!
 
 # Contribution
 

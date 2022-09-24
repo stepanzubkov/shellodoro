@@ -48,6 +48,10 @@ Congratulations!
 
 # Contribution
 
+[![Stargazers repo roster for @Stepan-Zubkov/shellodoro](https://reporoster.com/stars/Stepan-Zubkov/shellodoro)](https://github.com/Stepan-Zubkov/shellodoro/stargazers)
+
+[![Forkers repo roster for @Stepan-Zubkov/shellodoro](https://reporoster.com/forks/Stepan-Zubkov/shellodoro)](https://github.com/Stepan-Zubkov/shellodoro/network/members)
+
 If you like that repository, please star it ⭐
 
 The project is completely open for contributions! Make pull requests and submit issues.

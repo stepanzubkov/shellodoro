@@ -1,8 +1,10 @@
 # ![Shellodoro](https://user-images.githubusercontent.com/83695097/189335921-4c7514f0-fbfe-4387-9597-fa4a09c03561.jpg)
 
+![Downloads](https://img.shields.io/pypi/dm/shellodoro) ![Version](https://img.shields.io/pypi/v/shellodoro)
+
 # Right in your favorite terminal
 
-Now you do not have to be distracted from the ~~neovim~~ terminal. Just work with pomodoro in terminal!
+Now you do not have to be distracted from the terminal. Just work with pomodoro in terminal!
 
 ## Elementary usage
 

@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="UTF-8") as f:
 
 setuptools.setup(
     name="shellodoro",
-    version="1.0.4",
+    version="1.0.5",
     author="StepanZubkov",
     author_email="zubkovbackend@gmail.com",
     description="Pomodoro timer right in your favorite terminal!",

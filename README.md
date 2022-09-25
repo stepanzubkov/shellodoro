@@ -1,6 +1,8 @@
 # ![Shellodoro](https://user-images.githubusercontent.com/83695097/189335921-4c7514f0-fbfe-4387-9597-fa4a09c03561.jpg)
 
-![Downloads](https://img.shields.io/pypi/dm/shellodoro) ![Version](https://img.shields.io/pypi/v/shellodoro)
+![Downloads](https://img.shields.io/pypi/dm/shellodoro) ![Version](https://img.shields.io/pypi/v/shellodoro) 
+
+[star on github ⭐](https://github.com/Stepan-Zubkov/shellodoro)
 
 # Right in your favorite terminal
 

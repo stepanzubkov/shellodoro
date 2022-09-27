@@ -6,7 +6,7 @@ from plyer import notification
 from sys import platform
 from pathlib import Path
 
-from config import STATS_FILE
+from .config import STATS_FILE
 
 
 def send_notify(text: str):

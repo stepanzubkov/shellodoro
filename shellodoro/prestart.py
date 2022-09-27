@@ -1,16 +1,19 @@
-from config import DATA_DIR, MODES_FILE, STATS_FILE
+from .config import DATA_DIR, MODES_FILE, STATS_FILE
 
 
 def create_user_files():
+    """Creates user files (stats, modes) in XDG_DATA_HOME
+    ($HOME/.local/share/shellodoro/ by default)"""
     if not DATA_DIR.exists():
         DATA_DIR.mkdir(parents=True)
     if not MODES_FILE.is_file():
         create_modes_file()
     if not STATS_FILE.is_file():
-        create_stats_files()
+        create_stats_file()
 
 
 def create_modes_file():
+    """Create modes file and write basic modes to it"""
     with MODES_FILE.open("w") as modes:
         modes.write(
             """
@@ -38,7 +41,8 @@ def create_modes_file():
         )
 
 
-def create_stats_files():
+def create_stats_file():
+    """Creates stats file with empty stats"""
     with STATS_FILE.open("w") as stats:
         stats.write(
             """

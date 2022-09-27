@@ -3,9 +3,9 @@ import sys
 import time
 import json
 
-from config import MODES_FILE, STATS_FILE
-from tools import ftime, send_notify, add_pomodoro, get_json, to_graph
-from prestart import create_user_files
+from .config import MODES_FILE, STATS_FILE
+from .tools import ftime, send_notify, add_pomodoro, get_json, to_graph
+from .prestart import create_user_files
 
 
 create_user_files()

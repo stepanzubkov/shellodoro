@@ -2,76 +2,13 @@ import click
 import sys
 import time
 import json
-from pathlib import Path
 
-from .tools import ftime, send_notify, add_pomodoro, get_json, to_graph
+from config import MODES_FILE, STATS_FILE
+from tools import ftime, send_notify, add_pomodoro, get_json, to_graph
+from prestart import create_user_files
 
 
-if not Path("modes.json").is_file():
-    with open("modes.json", "w") as f:
-        f.write(
-            """
-{
-    "default": {
-        "work_time": 20,
-        "break_time": 5,
-        "long_break_time": 15,
-        "long_break_freq": 4
-    },
-    "52/17": {
-        "work_time": 52,
-        "break_time": 17,
-        "long_break_time": 30,
-        "long_break_freq": 4
-    },
-    "90/30": {
-        "work_time": 90,
-        "break_time": 30,
-        "long_break_time": 45,
-        "long_break_freq": 4
-    }
-}
-            """
-        )
-
-if not Path("stats.json").is_file():
-    with open("stats.json", "w") as f:
-        f.write(
-            """
-{
-    "days": [
-        {
-            "name": "Monday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Tuesday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Wednesday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Thursday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Friday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Saturday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Sunday",
-            "pomodoros": 0
-        }
-    ]
-}
-            """
-        )
+create_user_files()
 
 
 @click.group(invoke_without_command=True)
@@ -83,14 +20,14 @@ def main(ctx, list_modes, stats):
     if ctx.invoked_subcommand is None:
         # List all pomodoro modes
         if list_modes:
-            with open("modes.json", "r") as f:
+            with MODES_FILE.open() as f:
                 modes = json.load(f)
                 for i in modes.keys():
                     click.secho(f"{i}:", fg="green")
                     for j in modes[i].keys():
                         click.echo(f"\t{j}: {modes[i][j]}")
         if stats:
-            to_graph(get_json("stats.json"))
+            to_graph(get_json(STATS_FILE))
 
 
 @main.command()
@@ -121,7 +58,7 @@ def main(ctx, list_modes, stats):
 )
 def start(mode, session_size, work_label, break_label):
     """Starts a pomodoro timer with choosed mode and size"""
-    with open("modes.json", "r") as f:
+    with MODES_FILE.open() as f:
         json_inner = f.read()
         # Check existing mode
         if mode not in json.loads(json_inner).keys():
@@ -189,11 +126,11 @@ def start(mode, session_size, work_label, break_label):
 )
 def add(name, work_time, break_time, long_break_time, long_break_freq):
     """Add a pomodoro mode"""
-    modes = get_json("modes.json")
+    modes = get_json(MODES_FILE)
     if name in modes.keys():
         click.secho("Error: This mode already exists", fg="red")
         return
-    with open("modes.json", "w") as f:
+    with MODES_FILE.open("w") as f:
         modes[name] = {
             "work_time": work_time,
             "break_time": break_time,
@@ -209,11 +146,11 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
 def delete(name):
     """Delete pomodoro mode"""
 
-    modes = get_json("modes.json")
+    modes = get_json(MODES_FILE)
     if name not in modes.keys():
         click.secho("Error: This mode does not exist", fg="red")
         return
-    with open("modes.json", "w") as f:
+    with MODES_FILE.open("w") as f:
         del modes[name]
         json.dump(modes, f, indent=4)
     click.secho("The mode was deleted successfully!", fg="green")
@@ -241,11 +178,11 @@ def delete(name):
 )
 def edit(name, work_time, break_time, long_break_time, long_break_freq):
     """Edit pomodoro mode"""
-    modes = get_json("modes.json")
+    modes = get_json(MODES_FILE)
     if name not in modes.keys():
         click.secho("Error: This mode does not exist", fg="red")
         return
-    with open("modes.json", "w") as f:
+    with MODES_FILE.open("w") as f:
         current_mode = modes[name]
         modes[name] = {
             "work_time": work_time if work_time else current_mode["work_time"],

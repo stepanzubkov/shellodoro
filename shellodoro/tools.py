@@ -48,13 +48,15 @@ def to_graph(data: dict):
 
 
 def add_pomodoro():
-    with STATS_FILE.open() as f:
-        json_inner = f.read()
-    with STATS_FILE.open("w") as f:
-        pomodoros = json.loads(json_inner)["days"]
-        cur_day = datetime.today().weekday()
-        pomodoros[cur_day]["pomodoros"] += 1
-        json.dump({"days": pomodoros}, f, indent=4)
+    with STATS_FILE.open("r") as file:
+        json_inner = json.loads(file.read())
+    with STATS_FILE.open("w") as file:
+        current_date = datetime.now().strftime("%d.%m.%Y")
+        if current_date in json_inner.keys():
+            json_inner[current_date] += 1
+        else:
+            json_inner[current_date] = 1
+        json.dump(json_inner, file, indent=4)
 
 
 def get_json(file: Path):

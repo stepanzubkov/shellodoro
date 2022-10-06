@@ -30,21 +30,18 @@ def ftime(seconds: int):
 
 
 def to_graph(data: dict):
-    data = data["days"]
-    cur_day = datetime.today().weekday() + 1
     now = datetime.now()
-    week_ago = now - timedelta(days=7)
-    for i in range(sorted(data, key=itemgetter("pomodoros"))[-1]["pomodoros"], 0, -1):
+    previous_week = [
+        (now - timedelta(days=x)).strftime("%d.%m.%Y") for x in range(7, -1, -1)
+    ]
+    for i in range(max(data.get(key, 0) for key in previous_week), 0, -1):
         print(
-            "|",
-            *[
-                "#" if day["pomodoros"] >= i else " "
-                for day in data[cur_day:] + data[:cur_day]
-            ],
-            sep="   ",
+            str(i),
+            *["#" if data.get(day, 0) >= i else " " for day in previous_week],
+            sep="  ",
         )
-    print("  ", *[day["name"][:3] for day in data[cur_day:] + data[:cur_day]])
-    print("  ", week_ago.strftime("%d.%m.%Y"), "-", now.strftime("%d.%m.%Y"))
+    print("  ", *[day[:2] for day in previous_week], sep=" ")
+    print("  ", previous_week[0], "-", previous_week[-1])
 
 
 def add_pomodoro():

@@ -6,13 +6,13 @@ with open("README.md", "r", encoding="UTF-8") as f:
 
 setuptools.setup(
     name="shellodoro",
-    version="1.0.6",
+    version="1.0.7",
     author="StepanZubkov",
     author_email="zubkovbackend@gmail.com",
     description="Pomodoro timer right in your favorite terminal!",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Stepan-Zubkov/shellodoro",
+    url="https://github.com/stepan-zubkov/shellodoro",
     keywords="pomodoro, timer, tool, cli",
     packages=setuptools.find_packages(),
     include_package_data=True,

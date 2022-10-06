@@ -45,38 +45,6 @@ def create_stats_file():
     """Creates stats file with empty stats"""
     with STATS_FILE.open("w") as stats:
         stats.write(
-            """
-{
-    "days": [
-        {
-            "name": "Monday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Tuesday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Wednesday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Thursday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Friday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Saturday",
-            "pomodoros": 0
-        },
-        {
-            "name": "Sunday",
-            "pomodoros": 0
-        }
-    ]
-}
+            """{}
             """
         )

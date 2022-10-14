@@ -1,33 +1,37 @@
-import click
+import json
 import sys
 import time
-import json
+
+import click
 
 from .config import MODES_FILE, STATS_FILE
-from .tools import ftime, send_notify, add_pomodoro, get_json, to_graph
 from .prestart import create_user_files
-
+from .tools import add_pomodoro, ftime, get_json, send_notify, to_graph
 
 create_user_files()
 
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-@click.option("--list-modes", "-l", is_flag=True, help="List pomodoro modes")
-@click.option("--stats", "-s", is_flag=True, help="Show user statistics")
-def main(ctx, list_modes, stats):
+def main(_ctx):
     """Pomodoro timer in terminal"""
-    if ctx.invoked_subcommand is None:
-        # List all pomodoro modes
-        if list_modes:
-            with MODES_FILE.open() as f:
-                modes = json.load(f)
-                for i in modes.keys():
-                    click.secho(f"{i}:", fg="green")
-                    for j in modes[i].keys():
-                        click.echo(f"\t{j}: {modes[i][j]}")
-        if stats:
-            to_graph(get_json(STATS_FILE))
+
+
+@main.command()
+def list_modes():
+    """Lists all pomodoro modes"""
+    with MODES_FILE.open() as f:
+        modes = json.load(f)
+        for i in modes.keys():
+            click.secho(f"{i}:", fg="green")
+            for j in modes[i].keys():
+                click.echo(f"\t{j}: {modes[i][j]}")
+
+
+@main.command()
+def stats():
+    """Shows statistics by last week"""
+    to_graph(get_json(STATS_FILE))
 
 
 @main.command()
@@ -125,7 +129,7 @@ def start(mode, session_size, work_label, break_label):
     help="Sets a long break frequency",
 )
 def add(name, work_time, break_time, long_break_time, long_break_freq):
-    """Add a pomodoro mode"""
+    """Adds a pomodoro mode"""
     modes = get_json(MODES_FILE)
     if name in modes.keys():
         click.secho("Error: This mode already exists", fg="red")
@@ -144,7 +148,7 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
 @main.command()
 @click.argument("name")
 def delete(name):
-    """Delete pomodoro mode"""
+    """Deletes pomodoro mode"""
 
     modes = get_json(MODES_FILE)
     if name not in modes.keys():
@@ -177,7 +181,7 @@ def delete(name):
     help="Sets a long break frequency",
 )
 def edit(name, work_time, break_time, long_break_time, long_break_freq):
-    """Edit pomodoro mode"""
+    """Edits pomodoro mode"""
     modes = get_json(MODES_FILE)
     if name not in modes.keys():
         click.secho("Error: This mode does not exist", fg="red")

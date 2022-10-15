@@ -29,21 +29,6 @@ def ftime(seconds: int):
     return f"{format_m}:{format_s}"
 
 
-def to_graph(data: dict):
-    now = datetime.now()
-    previous_week = [
-        (now - timedelta(days=x)).strftime("%d.%m.%Y") for x in range(7, -1, -1)
-    ]
-    for i in range(max(data.get(key, 0) for key in previous_week), 0, -1):
-        print(
-            str(i),
-            *["#" if data.get(day, 0) >= i else " " for day in previous_week],
-            sep="  ",
-        )
-    print("  ", *[day[:2] for day in previous_week], sep=" ")
-    print("  ", previous_week[0], "-", previous_week[-1])
-
-
 def add_pomodoro():
     with STATS_FILE.open("r") as file:
         json_inner = json.loads(file.read())

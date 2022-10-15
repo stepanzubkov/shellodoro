@@ -1,12 +1,17 @@
-import json
-import sys
-import time
+"""
+Main executable file
+"""
 
 import click
+import sys
+import time
+import json
 
 from .config import MODES_FILE, STATS_FILE
+from .tools import ftime, send_notify, add_pomodoro, get_json
+from .formatting import format_modes, stats_to_graph
 from .prestart import create_user_files
-from .tools import add_pomodoro, ftime, get_json, send_notify, to_graph
+
 
 create_user_files()
 
@@ -22,16 +27,13 @@ def list_modes():
     """Lists all pomodoro modes"""
     with MODES_FILE.open() as f:
         modes = json.load(f)
-        for i in modes.keys():
-            click.secho(f"{i}:", fg="green")
-            for j in modes[i].keys():
-                click.echo(f"\t{j}: {modes[i][j]}")
+        click.echo(format_modes(modes))
 
 
 @main.command()
 def stats():
     """Shows statistics by last week"""
-    to_graph(get_json(STATS_FILE))
+    click.echo(stats_to_graph(get_json(STATS_FILE)))
 
 
 @main.command()

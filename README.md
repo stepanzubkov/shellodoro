@@ -26,7 +26,7 @@ If you forgot modes names, list they with one simple command
 
 Shellodoro automaticaly save your ~~personal data~~ statistics. Look at it **directly from the terminal.**
 
-![Screenshot_20220909_152241](https://user-images.githubusercontent.com/83695097/189349010-94f96031-80b6-4eb5-b553-8fa2622e3d5f.png)
+![Screenshot_20221017_102428](https://user-images.githubusercontent.com/83695097/196114425-a5ea9719-8333-48fb-9f40-4417848a3403.png)
 
 Also shellodoro sends notifications, when pomodoro ends
 

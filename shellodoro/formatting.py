@@ -7,12 +7,14 @@ from typing import Dict
 
 import click
 
+from .models.mode import Mode
 
-def format_modes(modes: Dict[str, Dict[str, int]]) -> str:
+
+def format_modes(modes: Dict[str, Mode]) -> str:
     """Formats modes json into beautiful string
 
     Args:
-        modes (Dict[str, Dict[str, int]]): Modes
+        modes (Dict[Mode]): Modes
 
     Returns:
         str: Result string

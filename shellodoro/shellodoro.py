@@ -11,6 +11,7 @@ from .config import MODES_FILE, STATS_FILE
 from .tools import ftime, send_notify, add_pomodoro, get_json
 from .formatting import format_modes, stats_to_graph
 from .prestart import create_user_files
+from .models.mode import Mode
 
 
 create_user_files()
@@ -70,7 +71,7 @@ def start(mode, session_size, work_label, break_label):
         if mode not in json.loads(json_inner).keys():
             raise NameError(f'Mode "{mode}" does not exist')
         else:
-            mode_data = json.loads(json_inner)[mode]
+            mode_data = Mode(**json.loads(json_inner)[mode])
 
     click.secho(
         f"Pomodoro timer with mode {mode} and session size {session_size} pomodoros launched!",
@@ -137,12 +138,12 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
         click.secho("Error: This mode already exists", fg="red")
         return
     with MODES_FILE.open("w") as f:
-        modes[name] = {
-            "work_time": work_time,
-            "break_time": break_time,
-            "long_break_time": long_break_time,
-            "long_break_freq": long_break_freq,
-        }
+        modes[name] = Mode(
+            work_time=work_time,
+            break_time=break_time,
+            long_break_time=long_break_time,
+            long_break_freq=long_break_freq,
+        )
         json.dump(modes, f, indent=4)
     click.secho("The mode was created successfully!", fg="green")
 
@@ -190,16 +191,16 @@ def edit(name, work_time, break_time, long_break_time, long_break_freq):
         return
     with MODES_FILE.open("w") as f:
         current_mode = modes[name]
-        modes[name] = {
-            "work_time": work_time if work_time else current_mode["work_time"],
-            "break_time": break_time if break_time else current_mode["break_time"],
-            "long_break_time": long_break_time
+        modes[name] = Mode(
+            work_time=work_time if work_time else current_mode["work_time"],
+            break_time=break_time if break_time else current_mode["break_time"],
+            long_break_time=long_break_time
             if long_break_time
             else current_mode["long_break_time"],
-            "long_break_freq": long_break_freq
+            long_break_freq=long_break_freq
             if long_break_freq
             else current_mode["long_break_freq"],
-        }
+        )
         json.dump(modes, f, indent=4)
     click.secho("The mode was edited successfully!", fg="green")
 

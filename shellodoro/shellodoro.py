@@ -6,6 +6,7 @@ import click
 import sys
 import time
 import json
+from typing import Dict, Any
 
 from .config import MODES_FILE, STATS_FILE
 from .tools import ftime, send_notify, add_pomodoro, get_json
@@ -19,20 +20,20 @@ create_user_files()
 
 @click.group(invoke_without_command=True)
 @click.pass_context
-def main(_ctx):
+def main(_ctx: Any) -> None:
     """Pomodoro timer in terminal"""
 
 
 @main.command()
-def list_modes():
+def list_modes() -> None:
     """Lists all pomodoro modes"""
     with MODES_FILE.open() as f:
-        modes = json.load(f)
+        modes: Dict[str, Mode] = json.load(f)
         click.echo(format_modes(modes))
 
 
 @main.command()
-def stats():
+def stats() -> None:
     """Shows statistics by last week"""
     click.echo(stats_to_graph(get_json(STATS_FILE)))
 
@@ -63,15 +64,15 @@ def stats():
     help="Sets break time label",
     show_default=True,
 )
-def start(mode, session_size, work_label, break_label):
+def start(mode, session_size, work_label, break_label) -> None:
     """Starts a pomodoro timer with choosed mode and size"""
     with MODES_FILE.open() as f:
-        json_inner = f.read()
+        json_inner: str = f.read()
         # Check existing mode
         if mode not in json.loads(json_inner).keys():
             raise NameError(f'Mode "{mode}" does not exist')
         else:
-            mode_data = Mode(**json.loads(json_inner)[mode])
+            mode_data: Mode = Mode(**json.loads(json_inner)[mode])
 
     click.secho(
         f"Pomodoro timer with mode {mode} and session size {session_size} pomodoros launched!",
@@ -131,9 +132,9 @@ def start(mode, session_size, work_label, break_label):
     show_default=True,
     help="Sets a long break frequency",
 )
-def add(name, work_time, break_time, long_break_time, long_break_freq):
+def add(name, work_time, break_time, long_break_time, long_break_freq) -> None:
     """Adds a pomodoro mode"""
-    modes = get_json(MODES_FILE)
+    modes: Dict[str, Mode] = get_json(MODES_FILE)
     if name in modes.keys():
         click.secho("Error: This mode already exists", fg="red")
         return
@@ -150,10 +151,10 @@ def add(name, work_time, break_time, long_break_time, long_break_freq):
 
 @main.command()
 @click.argument("name")
-def delete(name):
+def delete(name) -> None:
     """Deletes pomodoro mode"""
 
-    modes = get_json(MODES_FILE)
+    modes: Dict[str, Mode] = get_json(MODES_FILE)
     if name not in modes.keys():
         click.secho("Error: This mode does not exist", fg="red")
         return
@@ -183,14 +184,14 @@ def delete(name):
     show_default=True,
     help="Sets a long break frequency",
 )
-def edit(name, work_time, break_time, long_break_time, long_break_freq):
+def edit(name, work_time, break_time, long_break_time, long_break_freq) -> None:
     """Edits pomodoro mode"""
-    modes = get_json(MODES_FILE)
+    modes: Dict[str, Mode] = get_json(MODES_FILE)
     if name not in modes.keys():
         click.secho("Error: This mode does not exist", fg="red")
         return
     with MODES_FILE.open("w") as f:
-        current_mode = modes[name]
+        current_mode: Mode = modes[name]
         modes[name] = Mode(
             work_time=work_time if work_time else current_mode["work_time"],
             break_time=break_time if break_time else current_mode["break_time"],

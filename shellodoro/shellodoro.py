@@ -135,7 +135,7 @@ def start(mode, session_size, work_label, break_label) -> None:
 def add(name, work_time, break_time, long_break_time, long_break_freq) -> None:
     """Adds a pomodoro mode"""
     modes: Dict[str, Mode] = get_json(MODES_FILE)
-    if name in modes.keys():
+    if name in modes:
         click.secho("Error: This mode already exists", fg="red")
         return
     with MODES_FILE.open("w") as f:

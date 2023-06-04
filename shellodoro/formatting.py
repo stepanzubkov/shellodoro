@@ -20,7 +20,7 @@ def format_modes(modes: Dict[str, Mode]) -> str:
         str: Result string
     """
     result = ""
-    for i in modes.keys():
+    for i in modes:
         result += click.style(f"{i}:\n", fg="green")
         for j in modes[i].keys():
             result += f"\t{j}: {modes[i][j]}\n"
@@ -57,10 +57,7 @@ def stats_to_graph(stats: Dict[str, int]) -> str:
     for i in range(graph_height, 0, -1):
         graph += str(i)
         for day in previous_week:
-            if stats.get(day, 0) >= 1:
-                graph += "  #"
-            else:
-                graph += "   "
+            graph += "  #" if stats.get(day, 0) >= 1 else "   "
         graph += "\n"
 
     graph += " "

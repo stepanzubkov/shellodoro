@@ -13,7 +13,7 @@ def send_notify(text: str):
     if platform == "win32":
         notification.notify(message=text, app_name="Shellodoro", title="Shellodoro")
     # Linux and other UNIX OS`s
-    if NOTIFY_SEND_INSTALLED:
+    elif NOTIFY_SEND_INSTALLED:
         subprocess.Popen(
             ["notify-send", "Shellodoro", text, "-a", "Shellodoro", "-i", "terminal"]
         )

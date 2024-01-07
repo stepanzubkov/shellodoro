@@ -16,6 +16,8 @@ from .models.mode import Mode
 
 
 create_user_files()
+if sys.platform != "win32" and not NOTIFY_SEND_INSTALLED:
+    click.secho("notify-send is not installed, so notifications don't work.", fg="bright_yellow")
 
 
 @click.group(invoke_without_command=True)
@@ -207,6 +209,4 @@ def edit(name, work_time, break_time, long_break_time, long_break_freq) -> None:
 
 
 if __name__ == "__main__":
-    if sys.platform != "win32" and not NOTIFY_SEND_INSTALLED:
-        click.secho("notify-send is not installed, so notifications don't work.", fg="orange")
     main()

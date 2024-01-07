@@ -8,7 +8,7 @@ import time
 import json
 from typing import Dict, Any
 
-from .config import MODES_FILE, STATS_FILE
+from .config import MODES_FILE, NOTIFY_SEND_INSTALLED, STATS_FILE
 from .tools import ftime, send_notify, add_pomodoro, get_json
 from .formatting import format_modes, stats_to_graph
 from .prestart import create_user_files
@@ -207,4 +207,6 @@ def edit(name, work_time, break_time, long_break_time, long_break_freq) -> None:
 
 
 if __name__ == "__main__":
+    if sys.platform != "win32" and not NOTIFY_SEND_INSTALLED:
+        click.secho("notify-send is not installed, so notifications don't work.", fg="orange")
     main()

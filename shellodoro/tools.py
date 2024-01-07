@@ -1,12 +1,11 @@
-from operator import itemgetter
-from datetime import datetime, timedelta
+from datetime import datetime
 import subprocess
 import json
 from plyer import notification
 from sys import platform
 from pathlib import Path
 
-from .config import STATS_FILE
+from .config import STATS_FILE, NOTIFY_SEND_INSTALLED
 
 
 def send_notify(text: str):
@@ -14,7 +13,7 @@ def send_notify(text: str):
     if platform == "win32":
         notification.notify(message=text, app_name="Shellodoro", title="Shellodoro")
     # Linux and other UNIX OS`s
-    else:
+    if NOTIFY_SEND_INSTALLED:
         subprocess.Popen(
             ["notify-send", "Shellodoro", text, "-a", "Shellodoro", "-i", "terminal"]
         )

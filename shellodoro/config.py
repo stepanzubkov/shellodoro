@@ -1,4 +1,5 @@
 import os
+import shutil
 from pathlib import Path
 
 
@@ -9,3 +10,4 @@ DATA_DIR = Path(
 
 MODES_FILE = DATA_DIR / "modes.json"
 STATS_FILE = DATA_DIR / "stats.json"
+NOTIFY_SEND_INSTALLED = shutil.which("notify-send") is None
